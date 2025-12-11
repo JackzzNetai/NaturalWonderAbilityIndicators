@@ -124,7 +124,7 @@
 				</Container>
 
 				<Grid					ID="PromotionBanner"				Anchor="R,B"	Offset="0,0"	Size="Parent-54,43"	Texture="UnitPanel_PromotionBanner" SliceCorner="40,1" SliceTextureSize="78,43">
-					<Stack			ID="EarnedPromotionsStack"	Anchor="L,T"	Offset="34,6"		StackGrowth="right" StackPadding="2" />
+					<Stack			ID="EarnedPromotionsStack"	Anchor="L,T"	Offset="34,6"		StackGrowth="Right" StackPadding="2" />
 				</Grid>
 
 				<!-- Selected Unit Combat Stat -->
@@ -447,6 +447,16 @@
 						<Label ID="EspionageTurnsRemaining" Anchor="L,T" Style="FontNormal12"/>
 					</Stack>
 				</Container>
+				<!-- Natural Wonder Ability Indicators by NETAI -->
+				<Stack ID="WonderAbilityStack" Anchor="R,T" Offset="6,36" StackGrowth="Down" StackPadding="6">
+						<Image ID="Icon_AlpineTraining" Size="16,16" Icon="ICON_UNITOPERATION_MOVE_TO" IconSize="16" Hidden="1" ToolTip=""/>
+						<Image ID="Icon_SpearOfFionn" Size="16,16" Icon="ICON_UNITOPERATION_RETRAIN" IconSize="16" Hidden="1" ToolTip=""/>
+						<Image ID="Icon_WaterOfLife" Size="16,16" Icon="ICON_UNITOPERATION_HEAL" IconSize="16" Hidden="1" ToolTip=""/>
+						<Image ID="Icon_MysteriousCurrents" Size="16,16" Icon="ICON_UNITOPERATION_MOVE_TO" IconSize="16" Hidden="1" ToolTip=""/>
+						<Image ID="Icon_LysefjordPromotion" Size="16,16" Icon="ICON_UNITCOMMAND_PROMOTE" IconSize="16" Hidden="1" ToolTip=""/>
+						<Image ID="Icon_AltitudeTraining" Size="16,16" Icon="ICON_UNITOPERATION_MOVE_TO" IconSize="16" Hidden="1" ToolTip=""/>
+		    </Stack>
+		    <!-- END Natural Wonder Ability Indicators by NETAI -->
 			</Container>
 
     </SlideAnim>
