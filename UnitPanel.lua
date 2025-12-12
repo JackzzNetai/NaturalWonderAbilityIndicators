@@ -4334,7 +4334,28 @@ function Initialize()
 	local SettlementBlockedColor:number = UI.GetColorValue("COLOR_DISGUSTING_APPEAL");
 	Controls.SettlementWaterGrid_SettlementBlocked:SetColor(SettlementBlockedColor);
 
+	-- Natural Wonder Ability Indicators by NETAI
+	InitWonderTooltips()
+	-- END Natural Wonder Ability Indicators by NETAI
+
 end
 
 Initialize();
 
+
+-- Natural Wonder Ability Indicators by NETAI
+function InitWonderTooltips()
+    for unitAbilityType, config in pairs(m_WonderAbilitiesConfig) do
+    	local abilityDef = GameInfo.UnitAbilities[unitAbilityType];
+    	local featureDef = GameInfo.Features[config.FeatureType];
+
+    	if abilityDef and featureDef then
+	    	local name  :string = Locale.Lookup(abilityDef.Name);
+	    	local source:string = Locale.Lookup(featureDef.Name);
+	    	local desc  :string = Locale.Lookup(abilityDef.Description);
+
+	    	config.Tooltip = name .. " (" .. source .. ")[NEWLINE]" .. desc;
+	    end
+    end
+end
+-- END Natural Wonder Ability Indicators by NETAI
