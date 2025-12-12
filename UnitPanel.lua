@@ -4389,11 +4389,11 @@ function UpdateWonderAbilityIcons(data)
     end
 
     -- Special care to the promotion gained from Lysefjord
-    local pUnit = UI.GetHeadSelectedUnit();
-    if pUnit and hasAcquiredLysefjordPromotion(pUnit) then
+    if data.Owner and data.UnitID and hasAcquiredLysefjordPromotion(data.Owner, data.UnitID) then
     	hasTheseNaturalWonderAbilities[LYSEFJORD_DUMMY_ABILITY_TYPE] = true;
-    end
+	end
 
+    -- Reveal or hide icons based on availability
     for unitAbilityType, config in pairs(m_WonderAbilitiesConfig) do
     	if hasTheseNaturalWonderAbilities[unitAbilityType] then
     		Controls[config.ControlID]:SetHide(false);
@@ -4410,11 +4410,44 @@ end
 -- promotion from Lysefjord.
 -- Note: the game treats the promotion gained from Lysefjord differently from
 -- other natural wonder abilities. A "detour" is needed to retrieve that info.
---
--- `pUnit` is guaranteed to not be `nil`
 -- ===========================================================================
-function hasAcquiredLysefjordPromotion(pUnit)
-	return false;
+function hasAcquiredLysefjordPromotion(ownerID, givenUnitID)
+	local activeModifiers = GameEffects.GetModifiers();
+	--    ^^^
+	-- an array of integers (Gemini) representing
+	-- the runtime IDs of all active modifier instances in the current game state
+
+	for _, instID in ipairs(activeModifiers) do
+		local definition = GameEffects.GetModifierDefinition(instID);
+		--    ^^^
+		-- a table representing the static database definition of the modifier instance (Gemini)
+		-- definition.Id is of type `ModifierId`
+
+		if definition and definition.Id == LYSEFJORD_MODIFIER_ID then
+			local subjects = GameEffects.GetModifierSubjects(instID);
+			--    ^^^
+			-- an array of integers (Gemini) representing
+			-- the runtime IDs of the objects being affected by this modifier instance
+
+			if subjects then
+				for _, subjectID in ipairs(subjects) do
+					if GameEffects.GetObjectsPlayerId(subjectID) == ownerID then
+						-- Found an object that belongs to the player
+
+						-- Check if the found unit is the given unit
+						local subjectStr = GameEffects.GetObjectString(subjectID);
+                        local foundUnitID = tonumber(string.match(subjectStr, "Unit: (%d+)"));
+
+                        if foundUnitID == givenUnitID then
+                            return true; 
+                        end
+					end
+				end
+			end
+		end
+	end
+
+	return false
 end
 -- END Natural Wonder Ability Indicators by NETAI
 
