@@ -105,7 +105,20 @@
 				</Image>
 
 				<!--Unit Icon-->
-				<Image        ID="UnitIcon"               Texture="UnitPortraits95_1" Size="95,95" Anchor="L,B" Offset="3,32" Icon="ICON_UNIT_WARRIOR_PORTRAIT"/>
+				<Image        ID="UnitIcon"               Texture="UnitPortraits95_1" Size="95,95" Anchor="L,B" Offset="3,32" Icon="ICON_UNIT_WARRIOR_PORTRAIT">
+			    <!-- Natural Wonder Ability Indicators by NETAI -->
+			    <Image ID="AbilityOverlayBacking" Texture="Circle80_Base" Size="parent-10,parent-10" Anchor="C,C" Color="0,0,0,150" Hidden="0" ConsumeMouse="0">
+						<Stack ID="WonderAbilityStack" Anchor="R,C" Offset="9,0" StackGrowth="Down" StackPadding="3">
+							<Image ID="Icon_AlpineTraining" Size="16,16" Icon="ICON_UNITOPERATION_RETRAIN" IconSize="16" Hidden="1" ToolTip=""/>
+							<Image ID="Icon_SpearOfFionn" Size="16,16" Icon="ICON_UNIT_MACEDONIAN_HETAIROI" IconSize="16" Hidden="1" ToolTip=""/>
+							<Image ID="Icon_WaterOfLife" Size="16,16" Icon="ICON_UNITOPERATION_HEAL" IconSize="16" Hidden="1" ToolTip=""/>
+							<Image ID="Icon_MysteriousCurrents" Size="16,16" Icon="ICON_UNITOPERATION_MOVE_TO" IconSize="16" Hidden="1" ToolTip=""/>
+							<Image ID="Icon_LysefjordPromotion" Size="16,16" Icon="ICON_UNITCOMMAND_PROMOTE" IconSize="16" Hidden="1" ToolTip=""/>
+							<Image ID="Icon_AltitudeTraining" Size="16,16" Icon="ICON_UNITOPERATION_RETRAIN" IconSize="16" Hidden="1" ToolTip=""/>
+				    </Stack>
+			    </Image>
+			    <!-- END Natural Wonder Ability Indicators by NETAI -->
+				</Image>
 				<!-- City Icon -->
 				<Container    ID="CityIconArea"           Size="95,95" Anchor="L,B" Offset="3,32" Hidden="1">
 					<Image  ID="CircleBacking"  Texture="Circle80_Base"     Size="80,80" Anchor="C,C" Offset="0,-2">
@@ -447,16 +460,6 @@
 						<Label ID="EspionageTurnsRemaining" Anchor="L,T" Style="FontNormal12"/>
 					</Stack>
 				</Container>
-				<!-- Natural Wonder Ability Indicators by NETAI -->
-				<Stack ID="WonderAbilityStack" Anchor="R,T" Offset="6,36" StackGrowth="Down" StackPadding="6">
-						<Image ID="Icon_AlpineTraining" Size="16,16" Icon="ICON_UNITOPERATION_RETRAIN" IconSize="16" Hidden="1" ToolTip=""/>
-						<Image ID="Icon_SpearOfFionn" Size="16,16" Icon="ICON_UNIT_MACEDONIAN_HETAIROI" IconSize="16" Hidden="1" ToolTip=""/>
-						<Image ID="Icon_WaterOfLife" Size="16,16" Icon="ICON_UNITOPERATION_HEAL" IconSize="16" Hidden="1" ToolTip=""/>
-						<Image ID="Icon_MysteriousCurrents" Size="16,16" Icon="ICON_UNITOPERATION_MOVE_TO" IconSize="16" Hidden="1" ToolTip=""/>
-						<Image ID="Icon_LysefjordPromotion" Size="16,16" Icon="ICON_UNITCOMMAND_PROMOTE" IconSize="16" Hidden="1" ToolTip=""/>
-						<Image ID="Icon_AltitudeTraining" Size="16,16" Icon="ICON_UNITOPERATION_RETRAIN" IconSize="16" Hidden="1" ToolTip=""/>
-		    </Stack>
-		    <!-- END Natural Wonder Ability Indicators by NETAI -->
 			</Container>
 
     </SlideAnim>
