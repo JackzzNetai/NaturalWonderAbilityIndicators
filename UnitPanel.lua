@@ -20,9 +20,9 @@ local SECONDARY_ACTIONS_ART_PADDING	:number = -4;
 local MAX_BEFORE_TRUNC_STAT_NAME	:number = 170;
 local MIN_UNIT_PANEL_WIDTH			:number = 340;
 local BUILD_ACTIONS_OFFSET			:number = 162;
--- Natural Wonder Ability Indicators by NETAI
+-- BEGIN Natural Wonder Ability Indicators by NETAI
 local LYSEFJORD_MODIFIER_ID         :string = "LYSEFJORDEN_GRANT_NAVAL_UNIT_EXPERIENCE";
-local LYSEFJORD_DUMMY_ABILITY_TYPE  :string = "ABILITY_NWAI_LYSEFJORD_PROMOTION";  -- The game doesn't actually handle this through ability. This is a made-up name for generic implementation
+local LYSEFJORD_DUMMY_ABILITY_TYPE  :string = "ABILITY_UAH_LYSEFJORD_PROMOTION";  -- The game doesn't actually handle this through ability. This is a made-up name for generic implementation
 -- END Natural Wonder Ability Indicators by NETAI
 
 -- ===========================================================================
@@ -100,7 +100,7 @@ local m_HexColoringWaterAvail   : number = UILens.CreateLensLayerHash("Hex_Color
 local m_HexColoringGreatPeople  : number = UILens.CreateLensLayerHash("Hex_Coloring_Great_People");
 
 
--- Natural Wonder Ability Indicators by NETAI
+-- BEGIN Natural Wonder Ability Indicators by NETAI
 local m_WonderAbilitiesConfig = {
 	-- UnitAbilityType = {
 	--     FeatureType = FeatureType,
@@ -1008,8 +1008,15 @@ function View(data)
 
 	ResizeUnitPanelToFitActionButtons();
 
-	-- Natural Wonder Ability Indicators by NETAI
-	UpdateWonderAbilityIcons(data);
+	-- BEGIN Natural Wonder Ability Indicators by NETAI
+	if data.FormationClass == "FORMATION_CLASS_LAND_COMBAT" or
+       data.FormationClass == "FORMATION_CLASS_NAVAL" or
+       data.FormationClass == "FORMATION_CLASS_AIR" then
+       	Controls["UAH_Root"]:SetHide(false);
+       	UpdateWonderAbilityIcons(data);
+    else
+    	Controls["UAH_Root"]:SetHide(true);
+	end
 	-- END Natural Wonder Ability Indicators by NETAI
 
 	---=======[ STATS ]=======---
@@ -2154,18 +2161,18 @@ function OnToggleSecondRow()
 	ResizeUnitPanelToFitActionButtons();
 end
 
--- Natural Wonder Ability Indicators by NETAI
+-- BEGIN Natural Wonder Ability Indicators by NETAI
 -- ===========================================================================
 function onToggleAbilityPanel()
-	local isHidden:boolean = Controls.AbilityHighlightsPanel:IsHidden();
+	local isHidden:boolean = Controls["UAH_Panel"]:IsHidden();
 	if isHidden then
-		Controls.AbilityHighlightsPanel:SetHide(false);
-		Controls.AbilityHighlightsPanelToggleButton:SetTextureOffsetVal(0,22);
-		Controls.AbilityHighlightsPanelToggleButton:SetToolTipString("Collapse ability summary panel.");
+		Controls["UAH_Panel"]:SetHide(false);
+		Controls["UAH_PanelToggleButton"]:SetTextureOffsetVal(0,22);
+		Controls["UAH_PanelToggleButton"]:SetToolTipString("Collapse ability summary panel.");
 	else
-		Controls.AbilityHighlightsPanel:SetHide(true);
-		Controls.AbilityHighlightsPanelToggleButton:SetTextureOffsetVal(0,0);
-		Controls.AbilityHighlightsPanelToggleButton:SetToolTipString("Expand ability summary panel.");
+		Controls["UAH_Panel"]:SetHide(true);
+		Controls["UAH_PanelToggleButton"]:SetTextureOffsetVal(0,0);
+		Controls["UAH_PanelToggleButton"]:SetToolTipString("Expand ability summary panel.");
 	end
 end
 -- END Natural Wonder Ability Indicators by NETAI
@@ -2336,6 +2343,9 @@ function ReadUnitData( unit:table )
 	kSubjectData.Ability					= unitAbility:GetAbilities();
 	-- Property-based values
 	kSubjectData.Lifespan					= unit:GetProperty(UnitPropertyKeys.LifespanRemaining);
+	-- BEGIN Natural Wonder Ability Indicators by NETAI
+	kSubjectData.FormationClass				= pUnitDef.FormationClass;
+	-- END Natural Wonder Ability Indicators by NETAI
 	
 	-- Great person data
 	-- Must be done before filtering unit stats because they look for some of the promotion information.
@@ -4306,8 +4316,8 @@ function Initialize()
 	Controls.ExpandSecondaryActionsButton:RegisterCallback( Mouse.eLClick, OnToggleSecondRow );
 	Controls.ExpandSecondaryActionsButton:RegisterMouseEnterCallback( OnSecondaryActionStackMouseEnter );
 	Controls.ExpandSecondaryActionsButton:RegisterMouseExitCallback( OnSecondaryActionStackMouseExit );
-	-- Natural Wonder Ability Indicators by NETAI
-	Controls.AbilityHighlightsPanelToggleButton:RegisterCallback( Mouse.eLClick, onToggleAbilityPanel);
+	-- BEGIN Natural Wonder Ability Indicators by NETAI
+	Controls["UAH_PanelToggleButton"]:RegisterCallback( Mouse.eLClick, onToggleAbilityPanel);
 	-- END Natural Wonder Ability Indicators by NETAI
 
 	Events.BeginWonderReveal.Add( OnBeginWonderReveal );
@@ -4361,18 +4371,18 @@ function Initialize()
 	local SettlementBlockedColor:number = UI.GetColorValue("COLOR_DISGUSTING_APPEAL");
 	Controls.SettlementWaterGrid_SettlementBlocked:SetColor(SettlementBlockedColor);
 
-	-- Natural Wonder Ability Indicators by NETAI
-	InitWonderTooltips();
+	-- BEGIN Natural Wonder Ability Indicators by NETAI
+	InitAbilityTooltips();
 	-- END Natural Wonder Ability Indicators by NETAI
 
 end
 
 
--- Natural Wonder Ability Indicators by NETAI
+-- BEGIN Natural Wonder Ability Indicators by NETAI
 -- ===========================================================================
 -- Generate the tooltip for each ability icon in player's game language
 -- ===========================================================================
-function InitWonderTooltips()
+function InitAbilityTooltips()
     for unitAbilityType, config in pairs(m_WonderAbilitiesConfig) do
     	local abilityDef = GameInfo.UnitAbilities[unitAbilityType];
     	local featureDef = GameInfo.Features[config.FeatureType];

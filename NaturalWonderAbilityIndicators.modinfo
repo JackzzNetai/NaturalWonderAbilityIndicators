@@ -4,7 +4,7 @@
     <Name>Natural Wonder Ability Indicators</Name>
     <Stability>Beta</Stability>
     <Description>Adds visual indicators to the Unit Panel for units that have acquired unique Natural Wonder abilities (e.g., Alpine Training, Spear of Fionn).</Description>
-    <Teaser>Track acquired Natural Wonder abilities on your units with visual indicators.</Teaser>
+    <Teaser>Track Natural Wonder abilities on units with ease.</Teaser>
     <Authors>NETAI</Authors>
     <AffectsSavedGames>0</AffectsSavedGames>
     <CompatibleVersions>2.0</CompatibleVersions>
